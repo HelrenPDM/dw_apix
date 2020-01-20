@@ -3,6 +3,9 @@ defmodule DwApix.GlobalSearch do
   @dw_global_search_pattern "/api/search/global"
 
   @moduledoc """
+  [Deutsche Welle] (https://dw.com) API Client in Elixir.
+
+  Global search module
   """
 
   @doc """
@@ -23,27 +26,7 @@ defmodule DwApix.GlobalSearch do
       |> Map.put(:query, URI.encode_query(params))
       |> URI.to_string()
 
-    IO.inspect(uri_string)
-    do_request(uri_string)
-  end
-
-  defp do_request(url) do
-    case HTTPoison.get(url, [], [timeout: 50_000, recv_timeout: 50_000]) do
-      {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
-        # HTTP status 200 (OK) and we have a body
-        case Jason.decode(body) do
-          {:ok, decoded} -> {:ok, decoded}
-          {:error, error} -> {:error, error}
-        end
-
-      {:ok, %HTTPoison.Response{status_code: status_code}} ->
-        # Any other status
-        {:error, status_code}
-
-      {:error, error} ->
-        # some error during request
-        {:error, error}
-    end
+    DwApix.do_request(uri_string)
   end
 
   defp default_params do

@@ -9,7 +9,10 @@ defmodule DwApix.Language do
   Return all provided languages infos.
   """
   def get_all_languages() do
-    DwApix.get_config()["supportedLanguages"]
+    case DwApix.get_config() do
+      {:ok, config } -> config["supportedLanguages"]
+      {:error, error} -> {:error, error}
+    end
   end
 
   @doc """
