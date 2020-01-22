@@ -32,4 +32,14 @@ defmodule DwApix.Language do
       lang["id"] == id
     end)
   end
+
+  @doc """
+  Return language data privacy policy url by id.
+  """
+  def get_language_data_privacy_policy_by_id(id) do
+    Enum.find(DwApix.Language.get_all_languages(), fn lang ->
+      lang["id"] == id
+    end)
+    |> Map.get("dataPrivacyPolicyUrl")
+  end
 end

@@ -26,7 +26,7 @@ defmodule DwApix.GlobalSearch do
       |> Map.put(:query, URI.encode_query(params))
       |> URI.to_string()
 
-    DwApix.do_request(uri_string)
+    DwApix.do_get(uri_string, [{:timeout, 30_000}, {:recv_timeout, 30_000}])
   end
 
   defp default_params do
