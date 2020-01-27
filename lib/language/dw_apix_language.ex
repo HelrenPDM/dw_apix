@@ -10,7 +10,7 @@ defmodule DwApix.Language do
   """
   def get_all_languages() do
     case DwApix.get_config() do
-      {:ok, config } -> config["supportedLanguages"]
+      {:ok, config} -> Map.get(config, "supportedLanguages")
       {:error, error} -> {:error, error}
     end
   end

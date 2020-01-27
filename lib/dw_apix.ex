@@ -11,7 +11,7 @@ defmodule DwApix do
   """
   def get_version do
     case get_config() do
-      {:ok, config } -> config["apiVersion"]
+      {:ok, config} -> config["apiVersion"]
       {:error, error} -> {:error, error}
     end
   end

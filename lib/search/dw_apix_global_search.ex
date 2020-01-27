@@ -16,8 +16,7 @@ defmodule DwApix.GlobalSearch do
   is set to 50_000 ms.
   """
   def global_search(terms) when is_binary(terms) do
-    params =
-      Map.put(default_params(), "terms", terms)
+    params = Map.put(default_params(), "terms", terms)
 
     uri_string =
       @dw_base_api_url
