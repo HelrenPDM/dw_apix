@@ -11,7 +11,7 @@ defmodule DwApix do
   """
   def get_version do
     case get_config() do
-      {:ok, config } -> config["apiVersion"]
+      {:ok, config} -> config["apiVersion"]
       {:error, error} -> {:error, error}
     end
   end
@@ -26,11 +26,15 @@ defmodule DwApix do
       |> URI.merge(@dw_config_pattern)
       |> URI.to_string()
 
-    do_request(uri_string)
+    do_get(uri_string)
   end
-  
-  def do_request(url) do
-    case HTTPoison.get(url, [], [timeout: 50_000, recv_timeout: 50_000]) do
+
+  @doc """
+  Issue HTTPoison.get for a specific DW API `url`. Options possible.
+  """
+  @spec do_get(binary, Keyword.t()) :: {:ok, term} | {:error, Jason.DecodeError.t()}
+  def do_get(url, opts \\ []) do
+    case HTTPoison.get(url, [], opts) do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
         # HTTP status 200 (OK) and we have a body
         case Jason.decode(body) do

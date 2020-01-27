@@ -16,8 +16,7 @@ defmodule DwApix.GlobalSearch do
   is set to 50_000 ms.
   """
   def global_search(terms) when is_binary(terms) do
-    params =
-      Map.put(default_params(), "terms", terms)
+    params = Map.put(default_params(), "terms", terms)
 
     uri_string =
       @dw_base_api_url
@@ -26,7 +25,7 @@ defmodule DwApix.GlobalSearch do
       |> Map.put(:query, URI.encode_query(params))
       |> URI.to_string()
 
-    DwApix.do_request(uri_string)
+    DwApix.do_get(uri_string, [{:timeout, 30_000}, {:recv_timeout, 30_000}])
   end
 
   defp default_params do
