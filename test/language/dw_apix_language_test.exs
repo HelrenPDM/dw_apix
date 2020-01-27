@@ -15,6 +15,7 @@ defmodule DwApixTest.Language do
 
   test "get languages" do
     assert languages = DwApix.Language.get_all_languages()
+
     Enum.map(languages, fn lang ->
       assert true == @required_keys |> Enum.all?(&Map.has_key?(lang, &1))
     end)
