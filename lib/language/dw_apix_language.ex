@@ -18,7 +18,7 @@ defmodule DwApix.Language do
   @doc """
   Return language info by code.
   """
-  def get_language_by_code(code) do
+  def get_language_by_code(code) when is_binary(code) do
     Enum.find(DwApix.Language.get_all_languages(), fn lang ->
       lang["languageCode"] == code
     end)
@@ -27,7 +27,7 @@ defmodule DwApix.Language do
   @doc """
   Return language info by id.
   """
-  def get_language_by_id(id) do
+  def get_language_by_id(id) when is_integer(id) do
     Enum.find(DwApix.Language.get_all_languages(), fn lang ->
       lang["id"] == id
     end)
@@ -36,7 +36,7 @@ defmodule DwApix.Language do
   @doc """
   Return language data privacy policy url by id.
   """
-  def get_language_data_privacy_policy_by_id(id) do
+  def get_language_data_privacy_policy_by_id(id) when is_integer(id) do
     Enum.find(DwApix.Language.get_all_languages(), fn lang ->
       lang["id"] == id
     end)
