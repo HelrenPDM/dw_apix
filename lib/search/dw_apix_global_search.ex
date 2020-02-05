@@ -1,12 +1,25 @@
 defmodule DwApix.GlobalSearch do
-  @dw_base_api_url "https://api.dw.com"
-  @dw_global_search_pattern "/api/search/global"
-
   @moduledoc """
   [Deutsche Welle] (https://dw.com) API Client in Elixir.
 
   Global search module
   """
+
+  @dw_base_api_url "https://api.dw.com"
+  @dw_global_search_pattern "/api/search/global"
+
+  @default_params %{
+    "languageId" => 2,
+    "contentTypes" => "Image,Video,Program",
+    "startDate" => Date.utc_today() |> Date.add(-730) |> Date.to_string(),
+    "endDate" => Date.utc_today(),
+    "sortByDate" => true,
+    "pageIndex" => 1,
+    "asTeaser" => false,
+    "programs" => "",
+    "themes" => "",
+    "ids" => "",
+  }
 
   @doc """
   Searches for `terms` in a default query pattern.
@@ -16,7 +29,7 @@ defmodule DwApix.GlobalSearch do
   is set to 50_000 ms.
   """
   def global_search(terms) when is_binary(terms) do
-    params = Map.put(default_params(), "terms", terms)
+    params = Map.put(@default_params, "terms", terms)
 
     uri_string =
       @dw_base_api_url
@@ -28,14 +41,4 @@ defmodule DwApix.GlobalSearch do
     DwApix.do_get(uri_string, [{:timeout, 30_000}, {:recv_timeout, 30_000}])
   end
 
-  defp default_params do
-    %{
-      "languageId" => 2,
-      "startDate" =>
-        Date.utc_today()
-        |> Date.add(-730)
-        |> Date.to_string(),
-      "endDate" => Date.utc_today()
-    }
-  end
 end
